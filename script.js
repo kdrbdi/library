@@ -1,14 +1,14 @@
 const myLibrary = [];
 
-function Book(title, author, pages, yearPublished, ISBN, read, genre) {
+function Book(title, author, pages, yearPublished, ISBN, genre, read) {
   this.id = crypto.randomUUID();
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.yearPublished = yearPublished;
   this.ISBN = ISBN;
-  this.read = read;
   this.genre = genre;
+  this.read = read;
 }
 
 function addBookToLibrary(
@@ -119,7 +119,7 @@ addBookToLibrary(
 );
 console.dir(myLibrary);
 
-const table = document.querySelector("#library>table");
+const table = document.querySelector("#library>table>tbody");
 const dialog = document.querySelector("dialog");
 const form = document.querySelector("dialog form");
 const titleInput = document.querySelector("#title");
@@ -131,7 +131,7 @@ const genreInput = document.querySelector("#genre");
 const readInput = document.querySelector("#read");
 const showButton = document.querySelector("dialog + button");
 const submitButton = document.querySelector("dialog button[type='submit']");
-const closeButton = document.querySelector("dialog button");
+const closeButton = document.querySelector("dialog .btn-close");
 
 // function used to display a book
 function showBook(book) {
@@ -139,7 +139,19 @@ function showBook(book) {
   for (let prop in book) {
     if (prop !== "id") {
       let bookData = document.createElement("td");
-      bookData.textContent = book[prop];
+      bookData.classList.add(`td-${prop}`);
+      // Add check for read or not yet
+      if (prop == "read") {
+        if (book[prop]) {
+          bookData.textContent = "Done";
+          bookData.setAttribute("data-status", "done");
+        } else {
+          bookData.textContent = "Not yet";
+          bookData.setAttribute("data-status", "pending");
+        }
+      } else {
+        bookData.textContent = book[prop];
+      }
       bookRow.appendChild(bookData);
     }
   }
