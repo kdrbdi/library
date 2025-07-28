@@ -151,9 +151,9 @@ h6 {
   font-weight: 600;
 }
 
-#library tbody tr:nth-child(even):not(:last-child) {
+#library tbody tr:nth-child(even) {
   background-color: #f97a00;
-  td {
+  td:not(:last-child) {
     color: var(--color-text-secondary);
   }
 }
@@ -167,6 +167,12 @@ h6 {
 .td-genre,
 .td-read {
   text-align: right;
+}
+
+td[data-status] {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.2rem;
 }
 
 td[data-status="done"] {
