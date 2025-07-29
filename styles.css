@@ -94,11 +94,62 @@ h6 {
 ::backdrop {
   /* From https://css.glass */
   background: rgba(255, 255, 255, 0);
-  border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-background-secondary);
+  padding-bottom: 5rem;
+}
+dialog:modal {
+  animation: fadeIn 0.3s ease-out;
+  padding: 2rem 2rem 2.5rem;
+  margin: auto;
+  border: 1px transparent rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+}
+
+.modal-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding-bottom: 5px;
+}
+
+dialog form {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+dialog form input {
+  padding: 5px 15px;
+  border-radius: 5px;
+  outline: none;
+  border: unset;
+  border: 1px solid var(--color-accent-primary);
+}
+
+dialog form input:user-valid {
+  border: 1px solid #006600;
+}
+dialog form input:invalid {
+  border: 2px solid #e74c3c;
+}
+
+dialog form input[type="checkbox"] {
+  transform: scale(1.4);
+}
+
+dialog form div {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  justify-items: start;
 }
 
 #wrapper {
@@ -106,23 +157,36 @@ h6 {
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  background-color: var(--color-background-secondary);
   gap: 2rem;
+  padding-bottom: 5rem;
 }
 
 .header {
   background: var(--color-background-primary);
   align-self: stretch;
+  justify-items: center;
+  padding: 0.8rem 1rem;
+  margin-bottom: 2rem;
 }
 
 .nav ul {
+  padding-left: 0;
   list-style-type: none;
   display: flex;
   gap: 2rem;
 }
 
+.logo {
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--color-accent-primary);
+}
+
 .nav .nav-link {
   text-decoration: none;
+  font-size: 1.2rem;
+  color: var(--color-text-darker);
 }
 
 #library {
@@ -163,16 +227,25 @@ h6 {
   padding: 0.6rem 0.7rem;
 }
 
+#library td:last-child {
+  padding-right: 0;
+}
+
 .td-ISBN,
 .td-genre,
 .td-read {
   text-align: right;
 }
 
+.td-read:hover {
+  cursor: pointer;
+}
+
 td[data-status] {
   display: flex;
   justify-content: space-between;
   gap: 0.2rem;
+  margin: 0 auto;
 }
 
 td[data-status="done"] {
@@ -192,7 +265,7 @@ td[data-status="done"]::before {
   font-weight: bold;
 }
 
-.read-status:hover {
+.td[data-status]:hover {
   cursor: pointer;
 }
 
@@ -234,4 +307,71 @@ td button.delete-button {
 
 .delete-button:active .trash-svg {
   transform: scale(0.96) rotate(-1deg);
+}
+
+.controls {
+  align-self: flex-end;
+  padding: 0 9rem 0;
+}
+
+.btn-add-new {
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 3px;
+  padding: 12px 24px;
+  border: 0;
+  color: #fff;
+  background: #ff5000;
+  line-height: 1.15;
+  font-size: 16px;
+  :hover {
+    transition: all 0.1s ease;
+    box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1de9b6;
+  }
+}
+
+.btn-submit {
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  text-align: center;
+  border: 0;
+  padding: 7px 16px;
+  min-height: 36px;
+  min-width: 36px;
+  color: #ffffff;
+  background: #008060;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+  :hover {
+    background: #006e52;
+  }
+}
+
+.btn-close {
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 12px;
+  line-height: 20px;
+  height: 30px;
+  max-height: 30px;
+  background: none;
+  font-weight: 700;
+  border: 0;
+  border-radius: 0;
+  color: #d92736;
+  transition-timing-function: ease-in-out;
+  transition-property: background;
+  transition-duration: 150ms;
+  box-shadow: none;
+  :hover {
+    background: #f7f9fd;
+  }
 }

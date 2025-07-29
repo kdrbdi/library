@@ -24,24 +24,10 @@
           </ul>
         </nav>
       </div>
-      <div id="library">
-        <table>
-          <thead>
-            <th class="table-h">Title</th>
-            <th class="table-h">Author</th>
-            <th class="table-h">Pages</th>
-            <th class="table-h">Year Published</th>
-            <th class="table-h">ISBN</th>
-            <th class="table-h">Genre</th>
-            <th class="table-h">Read</th>
-            <th class="table-h"></th>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
       <div class="controls">
         <dialog>
-          <form action="#">
+          <p class="modal-title">Add new book</p>
+          <form action="#" method="dialog">
             <div>
               <label for="title">Title</label>
               <input type="text" id="title" />
@@ -56,11 +42,11 @@
             </div>
             <div>
               <label for="yearPublished">Year Published</label>
-              <input type="year" id="yearPublished" />
+              <input type="year" id="yearPublished" max="2025" />
             </div>
             <div>
               <label for="isbn">ISBN</label>
-              <input type="text" id="isbn" />
+              <input type="text" id="isbn" maxlength="13" />
             </div>
             <div>
               <label for="genre">Genre</label>
@@ -72,13 +58,30 @@
             </div>
             <div>
               <label for="read">Read</label>
-              <input type="checkbox" id="read" />
+              <span>
+                <input type="checkbox" id="read" />
+              </span>
             </div>
           </form>
-          <button autofocus type="submit">Submit</button>
+          <button autofocus type="submit" class="btn-submit">Submit</button>
           <button class="btn-close">Close</button>
         </dialog>
-        <button>Add New Book</button>
+        <button class="btn-add-new">Add New Book</button>
+      </div>
+      <div id="library">
+        <table>
+          <thead>
+            <th class="table-h">Title</th>
+            <th class="table-h">Author</th>
+            <th class="table-h">Pages</th>
+            <th class="table-h">Year Published</th>
+            <th class="table-h">ISBN</th>
+            <th class="table-h">Genre</th>
+            <th class="table-h">Read</th>
+            <th class="table-h"></th>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
     </div>
     <script src="script.js"></script>

@@ -1,6 +1,9 @@
 const myLibrary = [];
 
 function Book(title, author, pages, yearPublished, ISBN, genre, read) {
+  if (!new.target) {
+    throw Error("You must use the 'new' operator to call the constructor");
+  }
   this.id = crypto.randomUUID();
   this.title = title;
   this.author = author;
@@ -10,6 +13,10 @@ function Book(title, author, pages, yearPublished, ISBN, genre, read) {
   this.genre = genre;
   this.read = read;
 }
+
+Book.prototype.toggleRead = function () {
+  this.read = !read;
+};
 
 function addBookToLibrary(
   title,
@@ -135,6 +142,9 @@ const closeButton = document.querySelector("dialog .btn-close");
 function showBook(book) {
   let bookRow = document.createElement("tr");
   for (let prop in book) {
+    if (typeof book[prop] === "function") {
+      continue; // Skip if it's a method
+    }
     if (prop !== "id") {
       let bookData = document.createElement("td");
       bookData.classList.add(`td-${prop}`);
@@ -142,8 +152,6 @@ function showBook(book) {
       if (prop == "read") {
         // If the property is "read", change the element to a link to
         // enable toggle functionality
-        let readBtn = document.createElement("div");
-        readBtn.classList.add("read-status");
         if (book[prop]) {
           bookData.textContent = "Done";
           bookData.setAttribute("data-status", "done");
@@ -151,8 +159,7 @@ function showBook(book) {
           bookData.textContent = "Not yet";
           bookData.setAttribute("data-status", "pending");
         }
-        readBtn.appendChild(bookData);
-        bookRow.appendChild(readBtn);
+        bookRow.appendChild(bookData);
       } else {
         bookData.textContent = book[prop];
         bookRow.appendChild(bookData);
@@ -218,18 +225,27 @@ displayLibrary();
 
 submitButton.addEventListener("click", (e) => {
   e.preventDefault();
-  let newBook = [
-    titleInput.value,
-    authorInput.value,
-    +pagesInput.value,
-    +yearPublishedInput.value,
-    isbnInput.value,
-    genreInput.value,
-    `${readInput.checked ? true : false}`,
-  ];
-  addBookToLibrary(...newBook);
-  showBook(myLibrary.at(-1));
-  form.reset();
+  if (
+    titleInput.value &&
+    authorInput.value &&
+    pagesInput.value &&
+    yearPublishedInput.value &&
+    isbnInput.value &&
+    genreInput.value
+  ) {
+    let newBook = [
+      titleInput.value,
+      authorInput.value,
+      +pagesInput.value,
+      +yearPublishedInput.value,
+      isbnInput.value,
+      genreInput.value,
+      `${readInput.checked ? true : false}`,
+    ];
+    addBookToLibrary(...newBook);
+    showBook(myLibrary.at(-1));
+    form.reset();
+  }
 });
 
 showButton.addEventListener("click", () => {
