@@ -159,13 +159,62 @@ function showBook(book) {
       }
     }
   }
+  const tdDelete = document.createElement("td");
+  const deleteBtn = document.createElement("button");
+  deleteBtn.setAttribute("data-attribute", book.id);
+  deleteBtn.classList.add("delete-button");
+  deleteBtn.innerHTML = `<!-- From Uiverse.io by philipo30 --> 
+  <svg
+    class="trash-svg"
+    viewBox="0 -10 64 74"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g id="trash-can">
+      <rect
+        x="16"
+        y="24"
+        width="32"
+        height="30"
+        rx="3"
+        ry="3"
+        fill="#fff"
+      ></rect>
+
+      <g transform-origin="12 18" id="lid-group">
+        <rect
+          x="12"
+          y="12"
+          width="40"
+          height="6"
+          rx="2"
+          ry="2"
+          fill="#fff"
+        ></rect>
+        <rect
+          x="26"
+          y="8"
+          width="12"
+          height="4"
+          rx="2"
+          ry="2"
+          fill="#fff"
+        ></rect>
+      </g>
+    </g>
+  </svg>
+`;
+  tdDelete.appendChild(deleteBtn);
+  bookRow.appendChild(tdDelete);
   table.appendChild(bookRow);
 }
 
 // display books in library
-for (let book of myLibrary) {
-  showBook(book);
+function displayLibrary() {
+  for (let book of myLibrary) {
+    showBook(book);
+  }
 }
+displayLibrary();
 
 submitButton.addEventListener("click", (e) => {
   e.preventDefault();
@@ -191,13 +240,6 @@ closeButton.addEventListener("click", () => {
   dialog.close();
 });
 
-// readStatus.addEventListener("click", (e) => {
-//   // if (e.target.getAttribute("data-status") === "done") {
-//   //   e.target.setAttribute("data-status", "pending");
-//   // }
-//   console.dir(e.target);
-// });
-
 table.addEventListener("click", (e) => {
   if (e.target.classList.contains("td-read")) {
     if (e.target.getAttribute("data-status") === "done") {
@@ -206,6 +248,19 @@ table.addEventListener("click", (e) => {
     } else {
       e.target.setAttribute("data-status", "done");
       e.target.textContent = "Done";
+    }
+  }
+  if (e.target.classList.contains("delete-button")) {
+    let bookID = e.target.getAttribute("data-attribute");
+    console.dir(bookID);
+    for (let book of myLibrary) {
+      if (book.id === bookID) {
+        let bookIndex = myLibrary.findIndex((bk) => bk.id == bookID);
+        myLibrary.splice(bookIndex, 1);
+        console.log(myLibrary);
+        table.innerHTML = "";
+        displayLibrary();
+      }
     }
   }
 });
