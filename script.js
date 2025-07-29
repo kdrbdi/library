@@ -21,7 +21,6 @@ function addBookToLibrary(
   read
 ) {
   const book = new Book(title, author, pages, yearPublished, ISBN, genre, read);
-  console.dir(book);
   myLibrary.push(book);
 }
 
@@ -117,7 +116,6 @@ addBookToLibrary(
   "Fantasy",
   true
 );
-console.dir(myLibrary);
 
 const table = document.querySelector("#library>table>tbody");
 const dialog = document.querySelector("dialog");
@@ -142,6 +140,10 @@ function showBook(book) {
       bookData.classList.add(`td-${prop}`);
       // Add check for read or not yet
       if (prop == "read") {
+        // If the property is "read", change the element to a link to
+        // enable toggle functionality
+        let readBtn = document.createElement("div");
+        readBtn.classList.add("read-status");
         if (book[prop]) {
           bookData.textContent = "Done";
           bookData.setAttribute("data-status", "done");
@@ -149,10 +151,12 @@ function showBook(book) {
           bookData.textContent = "Not yet";
           bookData.setAttribute("data-status", "pending");
         }
+        readBtn.appendChild(bookData);
+        bookRow.appendChild(readBtn);
       } else {
         bookData.textContent = book[prop];
+        bookRow.appendChild(bookData);
       }
-      bookRow.appendChild(bookData);
     }
   }
   table.appendChild(bookRow);
@@ -185,4 +189,23 @@ showButton.addEventListener("click", () => {
 
 closeButton.addEventListener("click", () => {
   dialog.close();
+});
+
+// readStatus.addEventListener("click", (e) => {
+//   // if (e.target.getAttribute("data-status") === "done") {
+//   //   e.target.setAttribute("data-status", "pending");
+//   // }
+//   console.dir(e.target);
+// });
+
+table.addEventListener("click", (e) => {
+  if (e.target.classList.contains("td-read")) {
+    if (e.target.getAttribute("data-status") === "done") {
+      e.target.setAttribute("data-status", "pending");
+      e.target.textContent = "Not yet";
+    } else {
+      e.target.setAttribute("data-status", "done");
+      e.target.textContent = "Done";
+    }
+  }
 });

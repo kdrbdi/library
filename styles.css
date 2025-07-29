@@ -191,3 +191,7 @@ td[data-status="done"]::before {
   content: "✔";
   font-weight: bold;
 }
+
+.read-status:hover {
+  cursor: pointer;
+}
