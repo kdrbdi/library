@@ -1,22 +1,35 @@
 const myLibrary = [];
 
-function Book(title, author, pages, yearPublished, ISBN, genre, read) {
-  if (!new.target) {
-    throw Error("You must use the 'new' operator to call the constructor");
-  }
-  this.id = crypto.randomUUID();
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.yearPublished = yearPublished;
-  this.ISBN = ISBN;
-  this.genre = genre;
-  this.read = read;
-}
+// function Book(title, author, pages, yearPublished, ISBN, genre, read) {
+//   if (!new.target) {
+//     throw Error("You must use the 'new' operator to call the constructor");
+//   }
+//   this.id = crypto.randomUUID();
+//   this.title = title;
+//   this.author = author;
+//   this.pages = pages;
+//   this.yearPublished = yearPublished;
+//   this.ISBN = ISBN;
+//   this.genre = genre;
+//   this.read = read;
+// }
 
-Book.prototype.toggleRead = function () {
-  this.read = !read;
-};
+class Book {
+  constructor(title, author, pages, yearPublished, ISBN, genre, read) {
+    this.id = crypto.randomUUID();
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.yearPublished = yearPublished;
+    this.ISBN = ISBN;
+    this.genre = genre;
+    this.read = read;
+  }
+
+  toggleRead() {
+    this.read = !this.read;
+  }
+}
 
 function addBookToLibrary(
   title,
@@ -142,9 +155,6 @@ const closeButton = document.querySelector("dialog .btn-close");
 function showBook(book) {
   let bookRow = document.createElement("tr");
   for (let prop in book) {
-    if (typeof book[prop] === "function") {
-      continue; // Skip if it's a method
-    }
     if (prop !== "id") {
       let bookData = document.createElement("td");
       bookData.classList.add(`td-${prop}`);
